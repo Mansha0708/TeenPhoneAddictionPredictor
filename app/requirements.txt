@@ -1,8 +1,8 @@
 streamlit
+numpy
 pandas
 scikit-learn
 joblib
 seaborn
 matplotlib
-xgboost
-math
+xgboost==1.7.6

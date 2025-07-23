@@ -1,0 +1,22 @@
+.gitignore# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+*.egg-info/
+.env
+
+# Jupyter Notebook specific
+.ipynb_checkpoints/
+*.ipynb
+
+# Machine Learning models (optional, if you don't want to track them directly)
+# addiction_model.pkl
+# anxiety_model.pkl
+# depression_model.pkl
+
+# Streamlit specific
+.streamlit/

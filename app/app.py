@@ -59,7 +59,7 @@ st.markdown(
     }
     .st-emotion-cache-l9rwad:hover {
         background-color: #3A7ECF; /* Darker blue on hover */
-        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        box_shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
         transform: translateY(-2px);
     }
 
@@ -124,7 +124,7 @@ st.markdown(
 )
 
 # --- Header Image ---
-st.image("https://placehold.co/1200x200/A8DADC/1D3557?text=Teen+Digital+Wellbeing", use_column_width=True)
+st.image("https://placehold.co/1200x200/A8DADC/1D3557?text=Teen+Digital+Wellbeing", use_container_width=True) # Changed from use_column_width
 st.markdown("<h1 style='text-align: center; color: #4A90E2;'>Teen Phone Addiction Predictor</h1>", unsafe_allow_html=True)
 st.write("Enter the details below to estimate a teen's phone addiction level (0–10).")
 
@@ -393,4 +393,3 @@ if st.button("Predict Addiction Level", type="primary"):
 
 st.markdown("---")
 st.info("This prediction is an estimate. For a comprehensive assessment, consult with a professional.")
-

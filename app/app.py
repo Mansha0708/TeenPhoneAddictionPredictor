@@ -9,6 +9,125 @@ from math import pi # For radar chart
 # Set Streamlit page configuration
 st.set_page_config(page_title="Teen Phone Addiction Predictor", layout="centered", initial_sidebar_state="expanded")
 
+# --- Custom CSS for enhanced aesthetics ---
+st.markdown(
+    """
+    <style>
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+    html, body, [class*="st-"] {
+        font-family: 'Inter', sans-serif;
+        color: #212529; /* Dark grey for general text */
+    }
+
+    /* Main background color */
+    .stApp {
+        background-color: #F8F9FA; /* Off-white */
+    }
+
+    /* Header styling */
+    h1 {
+        color: #212529; /* Dark grey */
+        text-align: center;
+        font-weight: 700;
+        margin-bottom: 20px;
+    }
+    h2, h3, h4 {
+        color: #4A90E2; /* Primary blue for subheaders */
+        font-weight: 600;
+    }
+
+    /* Card-like containers for sections */
+    .st-emotion-cache-zt5ig8 { /* This targets the main block container */
+        background-color: #FFFFFF; /* White background for content blocks */
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        margin-bottom: 30px;
+    }
+
+    /* Button styling */
+    .st-emotion-cache-l9rwad { /* Targets the primary button container */
+        background-color: #4A90E2; /* Primary blue */
+        color: white !important;
+        border-radius: 10px;
+        padding: 10px 20px;
+        font-weight: 600;
+        border: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        transition: all 0.3s ease-in-out;
+    }
+    .st-emotion-cache-l9rwad:hover {
+        background-color: #3A7ECF; /* Darker blue on hover */
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        transform: translateY(-2px);
+    }
+
+    /* Slider styling */
+    .st-emotion-cache-16idsd6 { /* Slider track */
+        background-color: #A8DADC; /* Light blue */
+        border-radius: 5px;
+    }
+    .st-emotion-cache-1fo1909 { /* Slider thumb */
+        background-color: #4A90E2; /* Primary blue */
+        border: 2px solid #4A90E2;
+    }
+
+    /* Selectbox styling */
+    .st-emotion-cache-13hv93a { /* Selectbox container */
+        border-radius: 10px;
+        border: 1px solid #A8DADC;
+        box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .st-emotion-cache-13hv93a:focus-within {
+        border-color: #4A90E2;
+        box-shadow: 0 0 0 0.2rem rgba(74, 144, 226, 0.25);
+    }
+
+    /* Info, Success, Warning, Error boxes */
+    .st-emotion-cache-1c7y2kl { /* General alert box container */
+        border-radius: 10px;
+        padding: 15px;
+        margin-top: 15px;
+        margin-bottom: 15px;
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+    .st-emotion-cache-1c7y2kl.stAlert-info {
+        background-color: #E0F2F7; /* Light blue */
+        color: #2196F3; /* Info blue */
+        border-left: 5px solid #2196F3;
+    }
+    .st-emotion-cache-1c7y2kl.stAlert-success {
+        background-color: #E8F5E9; /* Light green */
+        color: #4CAF50; /* Success green */
+        border-left: 5px solid #4CAF50;
+    }
+    .st-emotion-cache-1c7y2kl.stAlert-warning {
+        background-color: #FFFDE7; /* Light yellow */
+        color: #FFC107; /* Warning yellow */
+        border-left: 5px solid #FFC107;
+    }
+    .st-emotion-cache-1c7y2kl.stAlert-error {
+        background-color: #FFEBEE; /* Light red */
+        color: #F44336; /* Error red */
+        border-left: 5px solid #F44336;
+    }
+
+    /* Progress bar styling */
+    .st-emotion-cache-1a32f29 > div > div > div > div { /* Progress bar fill */
+        background-color: #4A90E2 !important; /* Primary blue */
+    }
+
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+# --- Header Image ---
+st.image("https://placehold.co/1200x200/A8DADC/1D3557?text=Teen+Digital+Wellbeing", use_column_width=True)
+st.markdown("<h1 style='text-align: center; color: #4A90E2;'>Teen Phone Addiction Predictor</h1>", unsafe_allow_html=True)
+st.write("Enter the details below to estimate a teen's phone addiction level (0–10).")
+
 # --- Load the Trained Model ---
 # Ensure 'model/addiction_model.pkl' is in the correct path relative to your app.py
 try:
@@ -17,11 +136,6 @@ try:
 except FileNotFoundError:
     st.error("Error: Model file 'addiction_model.pkl' not found. Please ensure it's in the 'model/' directory.")
     st.stop() # Stop the app if model is not found
-
-# --- Streamlit UI ---
-st.title("📱 Teen Phone Addiction Predictor")
-st.markdown("---")
-st.write("Enter the details below to estimate a teen's phone addiction level (0–10).")
 
 # Create columns for better layout
 col1, col2 = st.columns(2)
@@ -181,11 +295,15 @@ if st.button("Predict Addiction Level", type="primary"):
         # --- Visual 2: Daily Usage Hours Distribution (Histogram) ---
         st.write("#### Daily Phone Usage Distribution")
         fig_usage, ax_usage = plt.subplots(figsize=(7, 4))
-        sns.histplot([daily_usage_hours], bins=[0, 5, 10, 15, 20, 25], kde=False, color='skyblue', ax=ax_usage)
-        ax_usage.set_title("Your Daily Phone Usage (Hours)", fontsize=14)
-        ax_usage.set_xlabel("Hours", fontsize=12)
-        ax_usage.set_ylabel("Count", fontsize=12)
+        sns.histplot([daily_usage_hours], bins=[0, 5, 10, 15, 20, 25], kde=False, color='#4A90E2', ax=ax_usage) # Using primary blue
+        ax_usage.set_title("Your Daily Phone Usage (Hours)", fontsize=14, color='#212529')
+        ax_usage.set_xlabel("Hours", fontsize=12, color='#212529')
+        ax_usage.set_ylabel("Count", fontsize=12, color='#212529')
         ax_usage.set_xticks([0, 5, 10, 15, 20, 24])
+        ax_usage.tick_params(axis='x', colors='#212529')
+        ax_usage.tick_params(axis='y', colors='#212529')
+        ax_usage.set_facecolor('#F8F9FA') # Match app background
+        fig_usage.patch.set_facecolor('#F8F9FA') # Match app background
         st.pyplot(fig_usage)
         plt.close(fig_usage)
 
@@ -193,13 +311,17 @@ if st.button("Predict Addiction Level", type="primary"):
         # --- Visual 3: Screen Time Before Bed vs. Daily Usage (Scatter Plot) ---
         st.write("#### Screen Time Habits: Before Bed vs. Daily Usage")
         fig_scatter, ax_scatter = plt.subplots(figsize=(7, 4))
-        sns.scatterplot(x=[daily_usage_hours], y=[screen_time_before_bed], s=200, color='coral', ax=ax_scatter, label='Your Input')
-        ax_scatter.set_title("Screen Time Before Bed vs. Total Daily Usage", fontsize=14)
-        ax_scatter.set_xlabel("Daily Phone Usage (Hours)", fontsize=12)
-        ax_scatter.set_ylabel("Screen Time Before Bed (Hours)", fontsize=12)
+        sns.scatterplot(x=[daily_usage_hours], y=[screen_time_before_bed], s=200, color='#FF6B6B', ax=ax_scatter, label='Your Input', edgecolor='black', linewidth=1) # Using accent red
+        ax_scatter.set_title("Screen Time Before Bed vs. Total Daily Usage", fontsize=14, color='#212529')
+        ax_scatter.set_xlabel("Daily Phone Usage (Hours)", fontsize=12, color='#212529')
+        ax_scatter.set_ylabel("Screen Time Before Bed (Hours)", fontsize=12, color='#212529')
         ax_scatter.set_xlim(0, 24)
         ax_scatter.set_ylim(0, 5)
-        ax_scatter.grid(True, linestyle='--', alpha=0.6)
+        ax_scatter.grid(True, linestyle='--', alpha=0.6, color='#A8DADC') # Lighter grid
+        ax_scatter.tick_params(axis='x', colors='#212529')
+        ax_scatter.tick_params(axis='y', colors='#212529')
+        ax_scatter.set_facecolor('#F8F9FA') # Match app background
+        fig_scatter.patch.set_facecolor('#F8F9FA') # Match app background
         st.pyplot(fig_scatter)
         plt.close(fig_scatter)
 
@@ -212,7 +334,7 @@ if st.button("Predict Addiction Level", type="primary"):
         max_values = {
             'Sleep Hours': 12,
             'Exercise Hours': 3,
-            'Social Interactions': 10, # Corrected key
+            'Social Interactions': 10,
             'Academic Performance': 100,
             'Self_Esteem': 10,
             'Family Communication': 10
@@ -222,7 +344,7 @@ if st.button("Predict Addiction Level", type="primary"):
         user_data = [
             sleep_hours / max_values['Sleep Hours'],
             exercise_hours / max_values['Exercise Hours'],
-            social_interactions / max_values['Social Interactions'], # Corrected key
+            social_interactions / max_values['Social Interactions'],
             academic_performance / max_values['Academic Performance'],
             self_esteem / max_values['Self_Esteem'],
             family_communication / max_values['Family Communication']
@@ -238,20 +360,29 @@ if st.button("Predict Addiction Level", type="primary"):
         fig_radar, ax_radar = plt.subplots(figsize=(8, 8), subplot_kw=dict(polar=True))
         ax_radar.set_theta_offset(pi / 2)
         ax_radar.set_theta_direction(-1)
-        plt.xticks(angles[:-1], categories, color='grey', size=12)
+        
+        # Set tick labels
+        plt.xticks(angles[:-1], categories, color='#212529', size=12) # Dark grey for labels
         ax_radar.set_rlabel_position(0)
-        plt.yticks([0.2, 0.4, 0.6, 0.8, 1.0], ["20%", "40%", "60%", "80%", "100%"], color="grey", size=10)
+        plt.yticks([0.2, 0.4, 0.6, 0.8, 1.0], ["20%", "40%", "60%", "80%", "100%"], color="#212529", size=10) # Dark grey for radial ticks
         plt.ylim(0, 1)
 
         # Plot user data
-        ax_radar.plot(angles, user_data + user_data[:1], linewidth=2, linestyle='solid', label='Your Profile', color='blue', alpha=0.7)
-        ax_radar.fill(angles, user_data + user_data[:1], 'blue', alpha=0.25)
+        ax_radar.plot(angles, user_data + user_data[:1], linewidth=2, linestyle='solid', label='Your Profile', color='#4A90E2', alpha=0.7) # Primary blue
+        ax_radar.fill(angles, user_data + user_data[:1], '#4A90E2', alpha=0.25)
 
         # Plot average data (optional)
-        ax_radar.plot(angles, average_data + average_data[:1], linewidth=1, linestyle='dashed', label='Ideal/Average Profile', color='red', alpha=0.7)
+        ax_radar.plot(angles, average_data + average_data[:1], linewidth=1, linestyle='dashed', label='Ideal/Average Profile', color='#FF6B6B', alpha=0.7) # Accent red
 
-        ax_radar.set_title("Teen's Behavioral Profile", size=16, color='darkblue', y=1.1)
-        ax_radar.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1))
+        ax_radar.set_title("Teen's Behavioral Profile", size=16, color='#212529', y=1.1) # Dark grey for title
+        ax_radar.legend(loc='upper right', bbox_to_anchor=(1.3, 1.1), frameon=False) # Remove legend frame
+        ax_radar.set_facecolor('#F8F9FA') # Match app background
+        fig_radar.patch.set_facecolor('#F8F9FA') # Match app background
+        
+        # Grid lines and spines
+        ax_radar.grid(True, color='#A8DADC', linestyle='--', alpha=0.6)
+        ax_radar.spines['polar'].set_color('#A8DADC') # Border color
+        
         st.pyplot(fig_radar)
         plt.close(fig_radar)
 
